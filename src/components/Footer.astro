@@ -1,0 +1,17 @@
+---
+import { profileContent } from "@/data/profile";
+
+export interface Props {
+  noMarginTop?: boolean;
+}
+
+const { noMarginTop = false } = Astro.props;
+const isRussian = Astro.url.pathname === "/ru" || Astro.url.pathname.startsWith("/ru/");
+const content = profileContent[isRussian ? "ru" : "en"];
+---
+
+<footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
+  <div class="footer-inner">
+    <span>{content.footerTagline}</span>
+  </div>
+</footer>

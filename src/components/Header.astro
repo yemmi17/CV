@@ -1,0 +1,151 @@
+---
+import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
+import IconMoon from "@/assets/icons/IconMoon.svg";
+import IconSunHigh from "@/assets/icons/IconSunHigh.svg";
+import IconX from "@/assets/icons/IconX.svg";
+import { SITE } from "@/config";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+
+const { pathname } = Astro.url;
+const isRussian = pathname === "/ru" || pathname.startsWith("/ru/");
+const localePrefix = isRussian ? "/ru" : "";
+const homeHref = isRussian ? "/ru/" : "/";
+const aboutHref = isRussian ? "/ru/about" : "/about";
+const labels = isRussian
+  ? {
+      home: "Главная",
+      about: "Обо мне",
+      projects: "Проекты",
+      blog: "Блог",
+      contacts: "Контакты",
+      open: "Открыть меню",
+      close: "Закрыть меню",
+      theme: "Переключить тему",
+      skip: "Перейти к содержимому",
+    }
+  : {
+      home: "Home",
+      about: "About",
+      projects: "Projects",
+      blog: "Blog",
+      contacts: "Contact",
+      open: "Open menu",
+      close: "Close menu",
+      theme: "Toggle theme",
+      skip: "Skip to content",
+    };
+
+const navItems = [
+  { href: homeHref, label: labels.home },
+  { href: aboutHref, label: labels.about },
+  { href: `${localePrefix}/#projects`, label: labels.projects },
+  { href: `${localePrefix}/#blog`, label: labels.blog },
+  { href: `${localePrefix}/#contact`, label: labels.contacts },
+];
+
+const normalizePath = (path: string) =>
+  path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
+const currentPath = normalizePath(pathname);
+const isActive = (href: string) => {
+  if (href.includes("#")) return false;
+  return (
+    normalizePath(href) === currentPath ||
+    (href === homeHref && currentPath === normalizePath(homeHref))
+  );
+};
+---
+
+<aside class="side-rail" aria-label="Site tools">
+  <a class="rail-logo" href={homeHref} aria-label={SITE.title}>✳</a>
+  <nav class="rail-nav" aria-label="Quick navigation">
+    <a class="rail-link is-active" href={homeHref} aria-label={labels.home}>⌂</a>
+    <a class="rail-link" href={aboutHref} aria-label={labels.about}>◎</a>
+    <a class="rail-link" href={`${localePrefix}/#blog`} aria-label={labels.blog}>✧</a>
+    <a class="rail-link" href={`${localePrefix}/#contact`} aria-label={labels.contacts}>⌯</a>
+    <a class="rail-link" href={`${localePrefix}/#projects`} aria-label={labels.projects}>▧</a>
+  </nav>
+  {
+    SITE.lightAndDarkMode && (
+      <button id="theme-btn" class="rail-link rail-theme" title={labels.theme} aria-label="auto" aria-live="polite">
+        <IconMoon class="theme-icon moon" />
+        <IconSunHigh class="theme-icon sun" />
+      </button>
+    )
+  }
+</aside>
+
+<header class="site-header">
+  <a id="skip-to-content" href="#main-content">
+    {labels.skip}
+  </a>
+
+  <div class="nav-shell">
+    <a href={homeHref} class="brand-link" aria-label={SITE.title}>
+      <span class="brand-mark" aria-hidden="true">N</span>
+      <span>Nikita</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {
+        navItems.map((item) => (
+          <a href={item.href} class:list={{ "is-active": isActive(item.href) }}>
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="nav-actions">
+      <LanguageSwitcher />
+      <button
+        id="menu-btn"
+        class="menu-button"
+        aria-label={labels.open}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-open-label={labels.open}
+        data-close-label={labels.close}
+      >
+        <IconMenuDeep id="menu-icon" />
+        <IconX id="close-icon" class="hidden" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-menu" class="mobile-nav hidden" aria-label="Mobile navigation">
+    {
+      navItems.map((item) => (
+        <a href={item.href} class:list={{ "is-active": isActive(item.href) }}>
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
+
+<script>
+  function toggleNav() {
+    const menuBtn = document.querySelector("#menu-btn");
+    const menuItems = document.querySelector("#mobile-menu");
+    const menuIcon = document.querySelector("#menu-icon");
+    const closeIcon = document.querySelector("#close-icon");
+
+    if (!menuBtn || !menuItems || !menuIcon || !closeIcon) return;
+
+    menuBtn.addEventListener("click", () => {
+      const openMenu = menuBtn.getAttribute("aria-expanded") === "true";
+      const openLabel = menuBtn.getAttribute("data-open-label") || "Open menu";
+      const closeLabel = menuBtn.getAttribute("data-close-label") || "Close menu";
+
+      menuBtn.setAttribute("aria-expanded", openMenu ? "false" : "true");
+      menuBtn.setAttribute("aria-label", openMenu ? openLabel : closeLabel);
+
+      menuItems.classList.toggle("hidden");
+      menuIcon.classList.toggle("hidden");
+      closeIcon.classList.toggle("hidden");
+    });
+  }
+
+  toggleNav();
+  document.addEventListener("astro:after-swap", () => toggleNav());
+</script>

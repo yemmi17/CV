@@ -1,0 +1,41 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import ProfileHome from "@/components/ProfileHome.astro";
+import StructuredData from "@/components/StructuredData.astro";
+import { SITE } from "@/config";
+import { profileContent } from "@/data/profile";
+import Layout from "@/layouts/Layout.astro";
+
+const content = profileContent.en;
+const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
+---
+
+<Layout
+  title={content.siteTitle}
+  description={content.siteDescription}
+  lang="en"
+  canonicalURL={`${siteUrl}/`}
+  alternateLinks={[
+    { href: `${siteUrl}/`, hreflang: "en" },
+    { href: `${siteUrl}/ru/`, hreflang: "ru" },
+    { href: `${siteUrl}/`, hreflang: "x-default" },
+  ]}
+>
+  <StructuredData type="WebSite" data={{ description: content.siteDescription }} />
+  <StructuredData
+    type="Person"
+    data={{
+      description: content.siteDescription,
+      jobTitle: "SRE/DevOps Engineer",
+      sameAs: [
+        "https://github.com/yemmi17",
+        "https://www.linkedin.com/in/nikita-borisov-34b1b9381/",
+        "https://t.me/Yemmi0",
+      ],
+    }}
+  />
+  <Header />
+  <ProfileHome content={content} />
+  <Footer />
+</Layout>

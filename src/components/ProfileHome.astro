@@ -1,0 +1,321 @@
+---
+import IconGitHub from "@/assets/icons/IconGitHub.svg";
+import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
+import IconMail from "@/assets/icons/IconMail.svg";
+import IconTelegram from "@/assets/icons/IconTelegram.svg";
+import type { ProfileContent } from "@/data/profile";
+
+export interface Props {
+  content: ProfileContent;
+}
+
+const { content } = Astro.props;
+const isRu = content.locale === "ru";
+const homePath = isRu ? "/ru/" : "/";
+
+const t = isRu
+  ? {
+      uptime: "Uptime 24/7",
+      readBlog: "Читать блог",
+      seeProjects: "Смотреть проекты",
+      why: "Почему выбирают мой блог",
+      fresh: "Свежие статьи",
+      allPosts: "Смотреть все статьи",
+      projects: "Проекты",
+      allProjects: "Смотреть все проекты",
+      about: "Обо мне",
+      contact: "На связи",
+      portraitAlt: "Портрет Nikita Borisov",
+      status: "System Status",
+      deployments: "Deployments",
+      reliability: "Reliability",
+      thisWeek: "+42 this week",
+      slo: "SLO соблюдается",
+    }
+  : {
+      uptime: "Uptime 24/7",
+      readBlog: "Read blog",
+      seeProjects: "View projects",
+      why: "Why people choose this blog",
+      fresh: "Fresh articles",
+      allPosts: "See all articles",
+      projects: "Projects",
+      allProjects: "See all projects",
+      about: "About me",
+      contact: "Contact",
+      portraitAlt: "Portrait of Nikita Borisov",
+      status: "System Status",
+      deployments: "Deployments",
+      reliability: "Reliability",
+      thisWeek: "+42 this week",
+      slo: "SLO is healthy",
+    };
+
+const contacts = content.contacts.filter((contact) =>
+  ["Email", "Telegram", "GitHub", "LinkedIn"].includes(contact.label)
+);
+
+const articles = isRu
+  ? [
+      {
+        icon: "k8s",
+        date: "20 мая 2024",
+        title: "Горизонтальное масштабирование в Kubernetes",
+        text: "Разбираемся с HPA, метриками и подводными камнями на продакшене.",
+        tags: ["Kubernetes", "Observability"],
+      },
+      {
+        icon: "tf",
+        date: "6 мая 2024",
+        title: "Управление инфраструктурой с Terraform на практике",
+        text: "Модули, состояния, workspaces и организация production-инфраструктуры.",
+        tags: ["Terraform", "IaC"],
+      },
+      {
+        icon: "gitops",
+        date: "22 апреля 2024",
+        title: "GitOps с Argo CD: наш опыт и грабли",
+        text: "Как внедряли GitOps и к чему пришли спустя полгода.",
+        tags: ["GitOps", "Argo CD"],
+      },
+    ]
+  : [
+      {
+        icon: "k8s",
+        date: "May 20, 2024",
+        title: "Horizontal autoscaling in Kubernetes",
+        text: "HPA, metrics, and production pitfalls that tend to appear late.",
+        tags: ["Kubernetes", "Observability"],
+      },
+      {
+        icon: "tf",
+        date: "May 6, 2024",
+        title: "Managing infrastructure with Terraform in practice",
+        text: "Modules, states, workspaces, and production infrastructure structure.",
+        tags: ["Terraform", "IaC"],
+      },
+      {
+        icon: "gitops",
+        date: "April 22, 2024",
+        title: "GitOps with Argo CD: lessons learned",
+        text: "How GitOps adoption unfolded and what changed after six months.",
+        tags: ["GitOps", "Argo CD"],
+      },
+    ];
+
+const whyItems = isRu
+  ? [
+      ["☷", "Практический опыт", "Реальные кейсы из работы с инфраструктурой и DevOps."],
+      ["♢", "Надежность и качество", "Проверенные подходы и лучшие практики."],
+      ["▧", "Аналитика и наблюдаемость", "Глубокий разбор мониторинга, метрик и логов."],
+      ["⬡", "Инструменты и автоматизация", "Обзоры и гайды по современным сервисам."],
+    ]
+  : [
+      ["☷", "Practical experience", "Real cases from infrastructure and DevOps work."],
+      ["♢", "Reliability and quality", "Proven approaches and production habits."],
+      ["▧", "Analytics and observability", "Monitoring, metrics, traces, and logs."],
+      ["⬡", "Tools and automation", "Guides for modern engineering workflows."],
+    ];
+
+const stats = isRu
+  ? [
+      ["Активные проекты", "24", "↗ 12%", "за последние 30 дней"],
+      ["Публикации", "36", "↗ 18%", "в блоге"],
+      ["Пользователи онлайн", "12", "↗ 8%", "сейчас на сайте"],
+      ["Выполнения", "340", "↗ 204%", "успешных деплоев"],
+    ]
+  : [
+      ["Active projects", "24", "↗ 12%", "last 30 days"],
+      ["Publications", "36", "↗ 18%", "in the blog"],
+      ["Users online", "12", "↗ 8%", "right now"],
+      ["Runs", "340", "↗ 204%", "successful deploys"],
+    ];
+
+const projects = [
+  {
+    icon: "☁",
+    title: "Cloud Blog Platform",
+    text: isRu
+      ? "Высокодоступная платформа в AWS с автомасштабированием и наблюдаемостью."
+      : "Highly available AWS platform with autoscaling and observability.",
+    tags: ["AWS", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+  },
+  {
+    icon: "⌘",
+    title: "K8s GitOps Boilerplate",
+    text: isRu
+      ? "Готовый шаблон для развертывания приложений через GitOps с Argo CD и Helm."
+      : "Reusable deployment baseline for Argo CD and Helm delivery.",
+    tags: ["GitHub Actions", "Argo CD", "Helm", "Kubernetes"],
+  },
+  {
+    icon: "▥",
+    title: "Observability Stack",
+    text: isRu
+      ? "Стек мониторинга на Prometheus, Grafana и Loki для полной видимости системы."
+      : "Prometheus, Grafana, and Loki setup for useful production visibility.",
+    tags: ["Prometheus", "Grafana", "Loki", "Alertmanager"],
+  },
+];
+
+const contactIcon = (label: string) =>
+  label === "GitHub"
+    ? IconGitHub
+    : label === "LinkedIn"
+      ? IconLinkedin
+      : label === "Telegram"
+        ? IconTelegram
+        : IconMail;
+---
+
+<main id="main-content" class="home-shell" data-layout="index" data-home-path={homePath}>
+  <section class="hero-panel" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="status-pill"><span></span>{t.uptime}</p>
+      <h1 id="hero-title">
+        SRE / DevOps
+        <span>Engineer</span>
+      </h1>
+      <p class="hero-summary">{content.heroSummary}</p>
+      <div class="hero-actions">
+        <a class="primary-action" href="#blog"><span>▯</span>{t.readBlog}</a>
+        <a class="secondary-action" href="#projects"><span>‹›</span>{t.seeProjects}</a>
+      </div>
+      <div class="hero-contact-line">
+        {contacts.slice(0, 3).map((contact) => {
+          const Icon = contactIcon(contact.label);
+          return (
+            <a href={contact.href}>
+              <Icon class="inline-icon" />
+              <span>{contact.text}</span>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="hero-orbit" aria-label={t.portraitAlt}>
+      <div class="orbit-ring"></div>
+      <img src="/avatar.jpg" alt={t.portraitAlt} />
+      <div class="float-card status-float">
+        <span class="mini-icon">⌁</span>
+        <strong>{t.status}</strong>
+        <small>All systems <b>100%</b></small>
+      </div>
+      <div class="float-card deploy-float">
+        <strong>{t.deployments}</strong>
+        <div class="mini-bars">
+          {[30, 52, 38, 64, 45, 76, 58, 84].map((height) => (
+            <span style={`--h:${height}%`}></span>
+          ))}
+        </div>
+        <small>{t.thisWeek}</small>
+      </div>
+      <div class="float-card reliability-float">
+        <strong>{t.reliability}</strong>
+        <b>100%</b>
+        <small>{t.slo}</small>
+      </div>
+    </div>
+
+    <aside class="hero-stats">
+      {stats.map(([label, value, delta, caption]) => (
+        <div class="stat-card">
+          <span>{label}</span>
+          <strong>{value}</strong>
+          <em>{delta}</em>
+          <small>{caption}</small>
+        </div>
+      ))}
+    </aside>
+  </section>
+
+  <section class="why-section" aria-labelledby="why-title">
+    <h2 id="why-title">{t.why}</h2>
+    <div class="why-grid">
+      {whyItems.map(([icon, title, text]) => (
+        <article class="why-item">
+          <span>{icon}</span>
+          <div>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="blog" class="content-section" aria-labelledby="blog-title">
+    <div class="section-heading">
+      <h2 id="blog-title">{t.fresh}</h2>
+      <a href="#blog">{t.allPosts} →</a>
+    </div>
+    <div class="article-grid">
+      {articles.map((article) => (
+        <article class="article-card">
+          <div class:list={["article-icon", article.icon]}>{article.icon === "k8s" ? "⎈" : article.icon === "tf" ? "◆" : ">_"}</div>
+          <div>
+            <time>{article.date}</time>
+            <h3>{article.title}</h3>
+            <p>{article.text}</p>
+            <div class="tag-list">{article.tags.map((tag) => <span>{tag}</span>)}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="projects" class="content-section" aria-labelledby="projects-title">
+    <div class="section-heading">
+      <h2 id="projects-title">{t.projects}</h2>
+      <a href="#projects">{t.allProjects} →</a>
+    </div>
+    <div class="project-grid">
+      {projects.map((project) => (
+        <article class="project-card">
+          <span class="project-icon">{project.icon}</span>
+          <div>
+            <h3>{project.title}</h3>
+            <p>{project.text}</p>
+            <div class="tag-list">{project.tags.map((tag) => <span>{tag}</span>)}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="bottom-grid" aria-label={`${t.about} and ${t.contact}`}>
+    <article class="about-panel">
+      <span class="about-icon">♙</span>
+      <div>
+        <h2>{t.about}</h2>
+        <p>{content.homeSections[0]?.body}</p>
+      </div>
+    </article>
+
+    <article id="contact" class="contact-panel">
+      <h2>{t.contact}</h2>
+      <div class="contact-links">
+        {contacts.map((contact) => {
+          const Icon = contactIcon(contact.label);
+          return (
+            <a href={contact.href}>
+              <Icon class="contact-icon" />
+              <span>{contact.text}</span>
+            </a>
+          );
+        })}
+      </div>
+    </article>
+  </section>
+</main>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const mainContent = document.querySelector("#main-content") as HTMLElement | null;
+    const homePath = mainContent?.dataset?.homePath || "/";
+    if (mainContent?.dataset?.layout) {
+      sessionStorage.setItem("backUrl", homePath);
+    }
+  });
+</script>
