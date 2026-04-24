@@ -431,16 +431,21 @@ footer {
 
 .hero-orbit {
   position: relative;
+  isolation: isolate;
   min-height: 21rem;
 }
 
 .orbit-ring {
   position: absolute;
-  inset: 0.35rem 1rem 0.35rem 0;
+  top: 50%;
+  left: 50%;
+  width: min(34rem, 92%);
+  aspect-ratio: 1;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 50% 55%, #fff 0 32%, rgba(232, 239, 255, 0.75) 33% 35%, transparent 36%),
-    repeating-radial-gradient(circle at 50% 55%, transparent 0 2.35rem, rgba(111, 157, 255, 0.22) 2.42rem 2.48rem);
+    radial-gradient(circle at center, #fff 0 32%, rgba(232, 239, 255, 0.75) 33% 35%, transparent 36%),
+    repeating-radial-gradient(circle at center, transparent 0 2.35rem, rgba(111, 157, 255, 0.22) 2.42rem 2.48rem);
+  transform: translate(-50%, -50%);
 }
 
 .orbit-ring::before {
@@ -453,14 +458,15 @@ footer {
 
 .hero-orbit img {
   position: absolute;
-  top: 2.2rem;
+  top: 50%;
   left: 50%;
   z-index: 2;
-  width: min(18rem, 52%);
+  width: min(17.5rem, 48%);
   aspect-ratio: 1;
   border-radius: 999px;
   object-fit: cover;
-  transform: translateX(-50%);
+  object-position: center;
+  transform: translate(-50%, -50%);
   filter: saturate(0.92) brightness(1.04);
 }
 
@@ -475,22 +481,22 @@ footer {
 }
 
 .status-float {
-  top: 3.7rem;
-  left: 3.1rem;
+  top: calc(50% - 9.7rem);
+  left: calc(50% - 15.4rem);
   width: 9.3rem;
   padding: 1.05rem;
 }
 
 .deploy-float {
-  bottom: 1.55rem;
-  left: 3.55rem;
+  top: calc(50% + 6.2rem);
+  left: calc(50% - 14.8rem);
   width: 9.6rem;
   padding: 0.95rem 1rem;
 }
 
 .reliability-float {
-  right: 1.4rem;
-  bottom: 2.7rem;
+  top: calc(50% + 5.9rem);
+  left: calc(50% + 7.6rem);
   width: 10rem;
   padding: 1rem;
 }
@@ -867,11 +873,11 @@ pre code {
 
   .status-float,
   .deploy-float {
-    left: 0;
+    left: max(0.2rem, calc(50% - 14rem));
   }
 
   .reliability-float {
-    right: 0;
+    left: min(calc(50% + 5.6rem), calc(100% - 10rem));
   }
 
   .why-grid,
@@ -905,23 +911,28 @@ pre code {
   }
 
   .hero-orbit img {
-    width: 12rem;
+    width: min(12rem, 54%);
   }
 
   .float-card {
-    transform: scale(0.86);
+    transform: translateZ(0) scale(0.86);
+    transform-origin: center;
   }
 
   .status-float {
-    top: 1rem;
+    top: calc(50% - 8.2rem);
+    left: -0.5rem;
   }
 
   .deploy-float {
-    bottom: 0;
+    top: calc(50% + 5.2rem);
+    left: -0.15rem;
   }
 
   .reliability-float {
-    bottom: 1.2rem;
+    top: calc(50% + 4.8rem);
+    left: auto;
+    right: -0.35rem;
   }
 
   .article-card,
