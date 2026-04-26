@@ -1,0 +1,46 @@
+---
+import IconGitHub from "@/assets/icons/IconGitHub.svg";
+import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
+import IconMail from "@/assets/icons/IconMail.svg";
+import IconTelegram from "@/assets/icons/IconTelegram.svg";
+import type { ProfileContent } from "@/data/profile";
+
+export interface Props {
+  content: ProfileContent;
+}
+
+const { content } = Astro.props;
+const contactIcon = (label: string) =>
+  label === "GitHub"
+    ? IconGitHub
+    : label === "LinkedIn"
+      ? IconLinkedin
+      : label === "Telegram"
+        ? IconTelegram
+        : IconMail;
+---
+
+<main id="main-content" class="home-shell page-shell">
+  <section class="page-hero" aria-labelledby="contacts-title">
+    <p class="status-pill"><span></span>{content.locale === "ru" ? "На связи" : "Available"}</p>
+    <h1 id="contacts-title">{content.contactTitle}</h1>
+    <p>{content.contactIntro}</p>
+  </section>
+
+  <section class="content-section" aria-label={content.contactTitle}>
+    <div class="contact-page-grid">
+      {
+        content.contacts.map((contact) => {
+          const Icon = contactIcon(contact.label);
+          return (
+            <a class="contact-page-card" href={contact.href}>
+              <Icon class="contact-icon" />
+              <span>{contact.label}</span>
+              <strong>{contact.text}</strong>
+            </a>
+          );
+        })
+      }
+    </div>
+  </section>
+</main>

@@ -14,11 +14,11 @@ export interface Props {
 const { frontmatter } = Astro.props;
 const isRussian = Astro.url.pathname === "/ru/about" || Astro.url.pathname.startsWith("/ru/about/");
 const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
-const canonicalURL = isRussian ? `${siteUrl}/ru/about/` : `${siteUrl}/about/`;
+const canonicalURL = isRussian ? `${siteUrl}/ru/about` : `${siteUrl}/about`;
 const alternateLinks = [
-  { href: `${siteUrl}/about/`, hreflang: "en" },
-  { href: `${siteUrl}/ru/about/`, hreflang: "ru" },
-  { href: `${siteUrl}/about/`, hreflang: "x-default" },
+  { href: `${siteUrl}/about`, hreflang: "en" },
+  { href: `${siteUrl}/ru/about`, hreflang: "ru" },
+  { href: `${siteUrl}/about`, hreflang: "x-default" },
 ];
 ---
 

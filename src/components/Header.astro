@@ -8,9 +8,11 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 
 const { pathname } = Astro.url;
 const isRussian = pathname === "/ru" || pathname.startsWith("/ru/");
-const localePrefix = isRussian ? "/ru" : "";
-const homeHref = isRussian ? "/ru/" : "/";
+const homeHref = isRussian ? "/ru" : "/";
 const aboutHref = isRussian ? "/ru/about" : "/about";
+const projectsHref = isRussian ? "/ru/projects" : "/projects";
+const blogHref = isRussian ? "/ru/blog" : "/blog";
+const contactsHref = isRussian ? "/ru/contacts" : "/contacts";
 const labels = isRussian
   ? {
       home: "Главная",
@@ -28,7 +30,7 @@ const labels = isRussian
       about: "About",
       projects: "Projects",
       blog: "Blog",
-      contacts: "Contact",
+      contacts: "Contacts",
       open: "Open menu",
       close: "Close menu",
       theme: "Toggle theme",
@@ -38,41 +40,18 @@ const labels = isRussian
 const navItems = [
   { href: homeHref, label: labels.home },
   { href: aboutHref, label: labels.about },
-  { href: `${localePrefix}/#projects`, label: labels.projects },
-  { href: `${localePrefix}/#blog`, label: labels.blog },
-  { href: `${localePrefix}/#contact`, label: labels.contacts },
+  { href: projectsHref, label: labels.projects },
+  { href: blogHref, label: labels.blog },
+  { href: contactsHref, label: labels.contacts },
 ];
 
 const normalizePath = (path: string) =>
   path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
 const currentPath = normalizePath(pathname);
-const isActive = (href: string) => {
-  if (href.includes("#")) return false;
-  return (
-    normalizePath(href) === currentPath ||
-    (href === homeHref && currentPath === normalizePath(homeHref))
-  );
-};
+const isActive = (href: string) =>
+  normalizePath(href) === currentPath ||
+  (href === homeHref && currentPath === normalizePath(homeHref));
 ---
-
-<aside class="side-rail" aria-label="Site tools">
-  <a class="rail-logo" href={homeHref} aria-label={SITE.title}>✳</a>
-  <nav class="rail-nav" aria-label="Quick navigation">
-    <a class="rail-link is-active" href={homeHref} aria-label={labels.home}>⌂</a>
-    <a class="rail-link" href={aboutHref} aria-label={labels.about}>◎</a>
-    <a class="rail-link" href={`${localePrefix}/#blog`} aria-label={labels.blog}>✧</a>
-    <a class="rail-link" href={`${localePrefix}/#contact`} aria-label={labels.contacts}>⌯</a>
-    <a class="rail-link" href={`${localePrefix}/#projects`} aria-label={labels.projects}>▧</a>
-  </nav>
-  {
-    SITE.lightAndDarkMode && (
-      <button id="theme-btn" class="rail-link rail-theme" title={labels.theme} aria-label="auto" aria-live="polite">
-        <IconMoon class="theme-icon moon" />
-        <IconSunHigh class="theme-icon sun" />
-      </button>
-    )
-  }
-</aside>
 
 <header class="site-header">
   <a id="skip-to-content" href="#main-content">
@@ -97,6 +76,14 @@ const isActive = (href: string) => {
 
     <div class="nav-actions">
       <LanguageSwitcher />
+      {
+        SITE.lightAndDarkMode && (
+          <button id="theme-btn" class="theme-button" title={labels.theme} aria-label="auto" aria-live="polite">
+            <IconMoon class="theme-icon moon" />
+            <IconSunHigh class="theme-icon sun" />
+          </button>
+        )
+      }
       <button
         id="menu-btn"
         class="menu-button"

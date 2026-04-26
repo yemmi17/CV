@@ -5,6 +5,21 @@ export interface ProfileSection {
   body: string;
 }
 
+export interface ProjectItem {
+  title: string;
+  description: string;
+  tags: string[];
+  href?: string;
+}
+
+export interface ListingPageContent {
+  title: string;
+  description: string;
+  intro: string;
+  emptyTitle?: string;
+  emptyDescription?: string;
+}
+
 export interface ProfileContent {
   locale: Locale;
   siteTitle: string;
@@ -22,7 +37,17 @@ export interface ProfileContent {
     title: string;
     items: string[];
   }>;
+  projectsPage: ListingPageContent;
+  projects: ProjectItem[];
+  blogPage: Required<Pick<ListingPageContent, "title" | "description" | "intro">> & {
+    emptyTitle: string;
+    emptyDescription: string;
+    publishedLabel: string;
+    tagsLabel: string;
+  };
   contactTitle: string;
+  contactDescription: string;
+  contactIntro: string;
   contacts: Array<{
     label: string;
     href: string;
@@ -42,7 +67,7 @@ export const profileContent: Record<Locale, ProfileContent> = {
     navAbout: "About",
     footerTagline:
       "Nikita Borisov. SRE/DevOps engineer writing about infrastructure, automation, and AI.",
-    switchLanguageLabel: "Русский",
+    switchLanguageLabel: "Russian",
     homeSections: [
       {
         title: "Current Role",
@@ -108,7 +133,46 @@ export const profileContent: Record<Locale, ProfileContent> = {
         ],
       },
     ],
-    contactTitle: "Contact",
+    projectsPage: {
+      title: "Projects",
+      description:
+        "Selected infrastructure, automation, and reliability projects by Nikita Borisov.",
+      intro:
+        "A focused list of practical engineering work around infrastructure, automation, observability, and delivery workflows.",
+    },
+    projects: [
+      {
+        title: "Cloud Blog Platform",
+        description: "Highly available AWS platform with autoscaling and observability.",
+        tags: ["AWS", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+      },
+      {
+        title: "K8s GitOps Boilerplate",
+        description: "Reusable deployment baseline for Argo CD and Helm delivery.",
+        tags: ["GitHub Actions", "Argo CD", "Helm", "Kubernetes"],
+      },
+      {
+        title: "Observability Stack",
+        description: "Prometheus, Grafana, and Loki setup for useful production visibility.",
+        tags: ["Prometheus", "Grafana", "Loki", "Alertmanager"],
+      },
+    ],
+    blogPage: {
+      title: "Blog",
+      description:
+        "Notes about infrastructure, automation, reliability, and practical AI adoption.",
+      intro:
+        "Longer technical notes will live here. Posts are loaded from the Astro content collection in src/content/blog.",
+      emptyTitle: "No posts yet",
+      emptyDescription:
+        "The blog collection is ready, but there are no published posts yet. Add Markdown or MDX files under src/content/blog to publish the first article.",
+      publishedLabel: "Published",
+      tagsLabel: "Tags",
+    },
+    contactTitle: "Contacts",
+    contactDescription: "Ways to contact Nikita Borisov for professional conversations.",
+    contactIntro:
+      "I am open to professional conversations, collaboration, and sharing notes from real infrastructure work.",
     contacts: [
       { label: "GitHub", href: "https://github.com/yemmi17", text: "github.com/yemmi17" },
       {
@@ -128,34 +192,34 @@ export const profileContent: Record<Locale, ProfileContent> = {
     locale: "ru",
     siteTitle: "Nikita Borisov",
     siteDescription:
-      "SRE/DevOps engineer облачной инфраструктуры. Пишу о надежности систем, автоматизации и практическом применении AI.",
+      "SRE/DevOps инженер, сфокусированный на облачной инфраструктуре, надежности, автоматизации и практическом применении AI.",
     heroTitle: "SRE / DevOps Engineer",
     heroSummary:
-      "Делюсь мыслями об инфраструктуре, автоматизации, надежности систем и развитии инженера.",
+      "Пишу об инфраструктуре, автоматизации, надежности систем и инженерном подходе к более спокойному production.",
     navAbout: "Обо мне",
     footerTagline:
-      "Nikita Borisov. SRE/DevOps engineer, заметки об инфраструктуре, автоматизации и AI.",
+      "Nikita Borisov. SRE/DevOps инженер, заметки об инфраструктуре, автоматизации и AI.",
     switchLanguageLabel: "English",
     homeSections: [
       {
         title: "Текущая роль",
-        body: "Работаю с облачной инфраструктурой и задачами reliability engineering в крупной банковской среде, где особенно важны стабильность, observability и аккуратные эксплуатационные процессы.",
+        body: "Работаю с облачной инфраструктурой и задачами reliability engineering в крупной банковской среде, где важны стабильность, observability и аккуратные эксплуатационные процессы.",
       },
       {
         title: "Рабочий стек",
-        body: "Ориентируюсь в рабочем наборе SRE/DevOps: Linux-администрирование, observability, базы данных, автоматизация и инструменты, нужные для поддержки production-сервисов.",
+        body: "Мой рабочий набор охватывает Linux-администрирование, observability, базы данных, автоматизацию и инструменты SRE/DevOps, нужные для предсказуемой поддержки production-сервисов.",
       },
       {
-        title: "Подход к инженерии",
-        body: "Не позиционирую себя как узкого специалиста в одной технологии. Моя сильная сторона в том, что я вижу картину целиком, связываю разные части стека и собираю из них практичные решения.",
+        title: "Инженерный подход",
+        body: "Я не позиционирую себя как узкого специалиста в одной технологии. Моя сильная сторона в том, что я вижу систему целиком, связываю разные части стека и двигаюсь к практичным решениям.",
       },
       {
         title: "AI и автоматизация",
-        body: "Помимо основного профиля, изучаю, как AI может помогать в инженерной автоматизации: экономить время, сокращать ручные действия и ускорять разбор сложных систем.",
+        body: "Параллельно с основной ролью изучаю, как AI может помогать в инженерной автоматизации: экономить время, сокращать ручные действия и ускорять разбор сложных систем.",
       },
       {
-        title: "Сообщество и практика",
-        body: "Участвую в хакатонах, CTF и других технических активностях, где важны скорость обучения, экспериментирование и умение решать задачи в ограниченное время.",
+        title: "Сообщество",
+        body: "Вне работы участвую в хакатонах, CTF и других технических активностях, где важны быстрое обучение, эксперименты и решение задач в ограниченное время.",
       },
       {
         title: "Контакты",
@@ -163,10 +227,10 @@ export const profileContent: Record<Locale, ProfileContent> = {
       },
     ],
     aboutTitle: "Обо мне",
-    aboutDescription: "Коротко обо мне, моем опыте, рабочем стеке и профессиональных интересах.",
+    aboutDescription: "Кратко обо мне, опыте, рабочем стеке и профессиональных интересах.",
     aboutIntro: [
       "Меня зовут Никита Борисов. В англоязычной среде обычно использую имя Nik.",
-      "У меня более 1.5 лет опыта в индустрии, и сейчас я работаю SRE/DevOps engineer облачной инфраструктуры в крупном российском банке.",
+      "У меня более 1.5 лет опыта в индустрии, сейчас я работаю SRE/DevOps инженером с фокусом на облачную инфраструктуру в крупном российском банке.",
     ],
     aboutSections: [
       {
@@ -189,7 +253,7 @@ export const profileContent: Record<Locale, ProfileContent> = {
         title: "Что мне сейчас интересно",
         items: [
           "Применение AI в инженерной автоматизации без хайпа, как реального рабочего инструмента.",
-          "Расширение системного кругозора за пределами своей текущей зоны ответственности.",
+          "Расширение системного кругозора за пределами текущей зоны ответственности.",
           "Превращение небольших скриптов и экспериментов в полезные улучшения повседневных процессов.",
         ],
       },
@@ -201,7 +265,45 @@ export const profileContent: Record<Locale, ProfileContent> = {
         ],
       },
     ],
+    projectsPage: {
+      title: "Проекты",
+      description: "Избранные инфраструктурные, automation и reliability-проекты Никиты Борисова.",
+      intro:
+        "Список практических инженерных работ вокруг инфраструктуры, автоматизации, observability и delivery-процессов.",
+    },
+    projects: [
+      {
+        title: "Cloud Blog Platform",
+        description: "Высокодоступная AWS-платформа с автомасштабированием и observability.",
+        tags: ["AWS", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+      },
+      {
+        title: "K8s GitOps Boilerplate",
+        description: "Переиспользуемый deployment-базис для доставки через Argo CD и Helm.",
+        tags: ["GitHub Actions", "Argo CD", "Helm", "Kubernetes"],
+      },
+      {
+        title: "Observability Stack",
+        description: "Стек Prometheus, Grafana и Loki для полезной видимости production-систем.",
+        tags: ["Prometheus", "Grafana", "Loki", "Alertmanager"],
+      },
+    ],
+    blogPage: {
+      title: "Блог",
+      description:
+        "Заметки об инфраструктуре, автоматизации, надежности и практическом применении AI.",
+      intro:
+        "Здесь будут технические заметки. Посты загружаются из Astro content collection в src/content/blog.",
+      emptyTitle: "Постов пока нет",
+      emptyDescription:
+        "Коллекция блога готова, но опубликованных постов пока нет. Добавь Markdown или MDX-файлы в src/content/blog, чтобы опубликовать первую статью.",
+      publishedLabel: "Опубликовано",
+      tagsLabel: "Теги",
+    },
     contactTitle: "Контакты",
+    contactDescription: "Способы связаться с Никитой Борисовым для профессионального общения.",
+    contactIntro:
+      "Открыт к профессиональному общению, совместным проектам и обмену практическим опытом из инфраструктурной работы.",
     contacts: [
       { label: "GitHub", href: "https://github.com/yemmi17", text: "github.com/yemmi17" },
       {

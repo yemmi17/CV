@@ -14,11 +14,11 @@ const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.we
   title={`${content.aboutTitle} | ${content.siteTitle}`}
   description={content.aboutDescription}
   lang="ru"
-  canonicalURL={`${siteUrl}/ru/about/`}
+  canonicalURL={`${siteUrl}/ru/about`}
   alternateLinks={[
-    { href: `${siteUrl}/about/`, hreflang: "en" },
-    { href: `${siteUrl}/ru/about/`, hreflang: "ru" },
-    { href: `${siteUrl}/about/`, hreflang: "x-default" },
+    { href: `${siteUrl}/about`, hreflang: "en" },
+    { href: `${siteUrl}/ru/about`, hreflang: "ru" },
+    { href: `${siteUrl}/about`, hreflang: "x-default" },
   ]}
 >
   <Header />
