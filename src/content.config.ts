@@ -3,6 +3,8 @@ import { glob } from "astro/loaders";
 import { SITE } from "@/config";
 
 export const BLOG_PATH = "src/content/blog";
+export const PAGES_PATH = "src/content/pages";
+export const PROJECTS_PATH = "src/content/projects";
 
 const blog = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
@@ -28,4 +30,37 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+const pages = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: `./${PAGES_PATH}`,
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ""),
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    slug: z.enum(["about", "contacts"]),
+    locale: z.enum(["en", "ru"]),
+  }),
+});
+
+const projects = defineCollection({
+  loader: glob({
+    pattern: "**/*.{md,mdx}",
+    base: `./${PROJECTS_PATH}`,
+    generateId: ({ entry }) => entry.replace(/\.(md|mdx)$/, ""),
+  }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    locale: z.enum(["en", "ru"]),
+    tags: z.array(z.string()).default([]),
+    featured: z.boolean().optional(),
+    draft: z.boolean().optional(),
+    repoUrl: z.string().url().optional(),
+    demoUrl: z.string().url().optional(),
+    order: z.number().optional(),
+  }),
+});
+
+export const collections = { blog, pages, projects };

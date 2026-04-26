@@ -1,18 +1,10 @@
 import type { APIRoute } from "astro";
-import { profileContent } from "@/data/profile";
+import { getPageDocument } from "@/utils/content";
 
 export const GET: APIRoute = async () => {
   try {
-    const content = profileContent.en;
-    const sections = content.aboutSections
-      .map(
-        (section) => `## ${section.title}\n\n${section.items.map((item) => `- ${item}`).join("\n")}`
-      )
-      .join("\n\n");
-    const contacts = content.contacts
-      .map((contact) => `- ${contact.label}: ${contact.text} (${contact.href})`)
-      .join("\n");
-    const markdownContent = `# ${content.aboutTitle}\n\n${content.aboutIntro.join("\n\n")}\n\n${sections}\n\n## ${content.contactTitle}\n\n${contacts}`;
+    const page = await getPageDocument("en", "about");
+    const markdownContent = `# ${page.data.title}\n\n${page.body}`;
 
     return new Response(markdownContent, {
       status: 200,

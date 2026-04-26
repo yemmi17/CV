@@ -1,18 +1,22 @@
 ---
+import { render } from "astro:content";
 import ContactsPage from "@/components/ContactsPage.astro";
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import { SITE } from "@/config";
 import { profileContent } from "@/data/profile";
 import Layout from "@/layouts/Layout.astro";
+import { getPageDocument } from "@/utils/content";
 
 const content = profileContent.ru;
+const page = await getPageDocument("ru", "contacts");
+const { Content } = await render(page);
 const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
 ---
 
 <Layout
-  title={`${content.contactTitle} | ${content.siteTitle}`}
-  description={content.contactDescription}
+  title={`${page.data.title} | ${content.siteTitle}`}
+  description={page.data.description}
   lang="ru"
   canonicalURL={`${siteUrl}/ru/contacts`}
   alternateLinks={[
@@ -22,6 +26,8 @@ const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.we
   ]}
 >
   <Header />
-  <ContactsPage content={content} />
+  <ContactsPage title={page.data.title} locale="ru" contacts={content.contacts}>
+    <Content />
+  </ContactsPage>
   <Footer />
 </Layout>

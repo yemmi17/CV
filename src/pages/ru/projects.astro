@@ -3,16 +3,20 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import ProjectsPage from "@/components/ProjectsPage.astro";
 import { SITE } from "@/config";
-import { profileContent } from "@/data/profile";
 import Layout from "@/layouts/Layout.astro";
+import { getPublishedProjects } from "@/utils/content";
 
-const content = profileContent.ru;
+const projects = await getPublishedProjects("ru");
 const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
+const title = "Проекты";
+const description = "Избранные инфраструктурные, automation и reliability-проекты Никиты Борисова.";
+const intro =
+  "Список практических инженерных работ вокруг инфраструктуры, автоматизации, observability и delivery-процессов.";
 ---
 
 <Layout
-  title={`${content.projectsPage.title} | ${content.siteTitle}`}
-  description={content.projectsPage.description}
+  title={`${title} | ${SITE.title}`}
+  description={description}
   lang="ru"
   canonicalURL={`${siteUrl}/ru/projects`}
   alternateLinks={[
@@ -22,6 +26,6 @@ const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.we
   ]}
 >
   <Header />
-  <ProjectsPage content={content} />
+  <ProjectsPage title={title} intro={intro} locale="ru" projects={projects} />
   <Footer />
 </Layout>

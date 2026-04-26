@@ -3,13 +3,19 @@ import IconGitHub from "@/assets/icons/IconGitHub.svg";
 import IconLinkedin from "@/assets/icons/IconLinkedin.svg";
 import IconMail from "@/assets/icons/IconMail.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
-import type { ProfileContent } from "@/data/profile";
+import type { Locale } from "@/data/profile";
 
 export interface Props {
-  content: ProfileContent;
+  title: string;
+  locale: Locale;
+  contacts: Array<{
+    label: string;
+    href: string;
+    text: string;
+  }>;
 }
 
-const { content } = Astro.props;
+const { title, locale, contacts } = Astro.props;
 const contactIcon = (label: string) =>
   label === "GitHub"
     ? IconGitHub
@@ -22,15 +28,17 @@ const contactIcon = (label: string) =>
 
 <main id="main-content" class="home-shell page-shell">
   <section class="page-hero" aria-labelledby="contacts-title">
-    <p class="status-pill"><span></span>{content.locale === "ru" ? "На связи" : "Available"}</p>
-    <h1 id="contacts-title">{content.contactTitle}</h1>
-    <p>{content.contactIntro}</p>
+    <p class="status-pill"><span></span>{locale === "ru" ? "На связи" : "Available"}</p>
+    <h1 id="contacts-title">{title}</h1>
+    <div class="prose page-prose">
+      <slot />
+    </div>
   </section>
 
-  <section class="content-section" aria-label={content.contactTitle}>
+  <section class="content-section" aria-label={title}>
     <div class="contact-page-grid">
       {
-        content.contacts.map((contact) => {
+        contacts.map((contact) => {
           const Icon = contactIcon(contact.label);
           return (
             <a class="contact-page-card" href={contact.href}>
