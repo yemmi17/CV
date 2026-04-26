@@ -6,7 +6,7 @@ import { SITE } from "@/config";
 import Layout from "@/layouts/Layout.astro";
 import { getPageDocument } from "@/utils/content";
 
-const page = await getPageDocument("ru", "about");
+const page = await getPageDocument("en", "about");
 const { Content } = await render(page);
 const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
 ---
@@ -14,8 +14,8 @@ const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.we
 <Layout
   title={`${page.data.title} | ${SITE.title}`}
   description={page.data.description}
-  lang="ru"
-  canonicalURL={`${siteUrl}/ru/about`}
+  lang="en"
+  canonicalURL={`${siteUrl}/about`}
   alternateLinks={[
     { href: `${siteUrl}/about`, hreflang: "en" },
     { href: `${siteUrl}/ru/about`, hreflang: "ru" },

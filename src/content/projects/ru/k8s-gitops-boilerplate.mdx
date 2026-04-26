@@ -1,0 +1,19 @@
+---
+title: "K8s GitOps Boilerplate"
+description: "Переиспользуемый deployment-базис для доставки через Argo CD и Helm."
+locale: "ru"
+tags: ["GitHub Actions", "Argo CD", "Helm", "Kubernetes"]
+featured: true
+order: 2
+---
+
+Переиспользуемый GitOps-базис для доставки сервисов в Kubernetes через Argo CD и Helm.
+
+Цель — сделать delivery предсказуемым: конфигурация версионируется, состояние deployment видно, а рутинные изменения можно проверить до попадания в кластер.
+
+## Инженерный фокус
+
+- GitOps-модель доставки через Argo CD.
+- Структура Helm charts для повторяемых deployment.
+- CI-проверки до попадания конфигурации в production.
+- Явное разделение application code и environment configuration.
