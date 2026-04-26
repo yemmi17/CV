@@ -1,0 +1,31 @@
+---
+import { getCollection } from "astro:content";
+import BlogIndex from "@/components/BlogIndex.astro";
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import { SITE } from "@/config";
+import { profileContent } from "@/data/profile";
+import Layout from "@/layouts/Layout.astro";
+
+const content = profileContent.en;
+const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
+const posts = (await getCollection("blog", ({ data }) => data.draft !== true)).sort(
+  (a, b) => b.data.pubDatetime.valueOf() - a.data.pubDatetime.valueOf()
+);
+---
+
+<Layout
+  title={`${content.blogPage.title} | ${content.siteTitle}`}
+  description={content.blogPage.description}
+  lang="en"
+  canonicalURL={`${siteUrl}/blog`}
+  alternateLinks={[
+    { href: `${siteUrl}/blog`, hreflang: "en" },
+    { href: `${siteUrl}/ru/blog`, hreflang: "ru" },
+    { href: `${siteUrl}/blog`, hreflang: "x-default" },
+  ]}
+>
+  <Header />
+  <BlogIndex content={content} posts={posts} />
+  <Footer />
+</Layout>

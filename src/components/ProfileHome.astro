@@ -11,152 +11,71 @@ export interface Props {
 
 const { content } = Astro.props;
 const isRu = content.locale === "ru";
-const homePath = isRu ? "/ru/" : "/";
+const homePath = isRu ? "/ru" : "/";
+const projectsHref = isRu ? "/ru/projects" : "/projects";
+const blogHref = isRu ? "/ru/blog" : "/blog";
+const contactsHref = isRu ? "/ru/contacts" : "/contacts";
 
 const t = isRu
   ? {
       uptime: "Uptime 24/7",
       readBlog: "Читать блог",
       seeProjects: "Смотреть проекты",
-      why: "Почему выбирают мой блог",
+      why: "О чем этот сайт",
       fresh: "Свежие статьи",
-      allPosts: "Смотреть все статьи",
+      allPosts: "Все статьи",
       projects: "Проекты",
-      allProjects: "Смотреть все проекты",
+      allProjects: "Все проекты",
       about: "Обо мне",
-      contact: "На связи",
+      contact: "Контакты",
       portraitAlt: "Портрет Nikita Borisov",
       status: "System Status",
       deployments: "Deployments",
       reliability: "Reliability",
       thisWeek: "+42 this week",
       slo: "SLO соблюдается",
+      noPosts: "Постов пока нет",
+      noPostsText: "Коллекция блога готова, но опубликованных статей еще нет.",
     }
   : {
       uptime: "Uptime 24/7",
       readBlog: "Read blog",
       seeProjects: "View projects",
-      why: "Why people choose this blog",
+      why: "What this site is about",
       fresh: "Fresh articles",
-      allPosts: "See all articles",
+      allPosts: "All articles",
       projects: "Projects",
-      allProjects: "See all projects",
+      allProjects: "All projects",
       about: "About me",
-      contact: "Contact",
+      contact: "Contacts",
       portraitAlt: "Portrait of Nikita Borisov",
       status: "System Status",
       deployments: "Deployments",
       reliability: "Reliability",
       thisWeek: "+42 this week",
       slo: "SLO is healthy",
+      noPosts: "No posts yet",
+      noPostsText: "The blog collection is ready, but there are no published articles yet.",
     };
 
 const contacts = content.contacts.filter((contact) =>
   ["Email", "Telegram", "GitHub", "LinkedIn"].includes(contact.label)
 );
 
-const articles = isRu
-  ? [
-      {
-        icon: "k8s",
-        date: "20 мая 2024",
-        title: "Горизонтальное масштабирование в Kubernetes",
-        text: "Разбираемся с HPA, метриками и подводными камнями на продакшене.",
-        tags: ["Kubernetes", "Observability"],
-      },
-      {
-        icon: "tf",
-        date: "6 мая 2024",
-        title: "Управление инфраструктурой с Terraform на практике",
-        text: "Модули, состояния, workspaces и организация production-инфраструктуры.",
-        tags: ["Terraform", "IaC"],
-      },
-      {
-        icon: "gitops",
-        date: "22 апреля 2024",
-        title: "GitOps с Argo CD: наш опыт и грабли",
-        text: "Как внедряли GitOps и к чему пришли спустя полгода.",
-        tags: ["GitOps", "Argo CD"],
-      },
-    ]
-  : [
-      {
-        icon: "k8s",
-        date: "May 20, 2024",
-        title: "Horizontal autoscaling in Kubernetes",
-        text: "HPA, metrics, and production pitfalls that tend to appear late.",
-        tags: ["Kubernetes", "Observability"],
-      },
-      {
-        icon: "tf",
-        date: "May 6, 2024",
-        title: "Managing infrastructure with Terraform in practice",
-        text: "Modules, states, workspaces, and production infrastructure structure.",
-        tags: ["Terraform", "IaC"],
-      },
-      {
-        icon: "gitops",
-        date: "April 22, 2024",
-        title: "GitOps with Argo CD: lessons learned",
-        text: "How GitOps adoption unfolded and what changed after six months.",
-        tags: ["GitOps", "Argo CD"],
-      },
-    ];
-
-const whyItems = isRu
-  ? [
-      ["☷", "Практический опыт", "Реальные кейсы из работы с инфраструктурой и DevOps."],
-      ["♢", "Надежность и качество", "Проверенные подходы и лучшие практики."],
-      ["▧", "Аналитика и наблюдаемость", "Глубокий разбор мониторинга, метрик и логов."],
-      ["⬡", "Инструменты и автоматизация", "Обзоры и гайды по современным сервисам."],
-    ]
-  : [
-      ["☷", "Practical experience", "Real cases from infrastructure and DevOps work."],
-      ["♢", "Reliability and quality", "Proven approaches and production habits."],
-      ["▧", "Analytics and observability", "Monitoring, metrics, traces, and logs."],
-      ["⬡", "Tools and automation", "Guides for modern engineering workflows."],
-    ];
-
+const whyItems = content.homeSections.slice(0, 4);
 const stats = isRu
   ? [
-      ["Активные проекты", "24", "↗ 12%", "за последние 30 дней"],
-      ["Публикации", "36", "↗ 18%", "в блоге"],
-      ["Пользователи онлайн", "12", "↗ 8%", "сейчас на сайте"],
-      ["Выполнения", "340", "↗ 204%", "успешных деплоев"],
+      ["Активные проекты", content.projects.length.toString(), "live", "в портфолио"],
+      ["Публикации", "0", "ready", "коллекция настроена"],
+      ["Контакты", contacts.length.toString(), "open", "каналы связи"],
+      ["Опыт", "1.5+", "years", "в индустрии"],
     ]
   : [
-      ["Active projects", "24", "↗ 12%", "last 30 days"],
-      ["Publications", "36", "↗ 18%", "in the blog"],
-      ["Users online", "12", "↗ 8%", "right now"],
-      ["Runs", "340", "↗ 204%", "successful deploys"],
+      ["Active projects", content.projects.length.toString(), "live", "in portfolio"],
+      ["Publications", "0", "ready", "collection configured"],
+      ["Contacts", contacts.length.toString(), "open", "available channels"],
+      ["Experience", "1.5+", "years", "in the industry"],
     ];
-
-const projects = [
-  {
-    icon: "☁",
-    title: "Cloud Blog Platform",
-    text: isRu
-      ? "Высокодоступная платформа в AWS с автомасштабированием и наблюдаемостью."
-      : "Highly available AWS platform with autoscaling and observability.",
-    tags: ["AWS", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
-  },
-  {
-    icon: "⌘",
-    title: "K8s GitOps Boilerplate",
-    text: isRu
-      ? "Готовый шаблон для развертывания приложений через GitOps с Argo CD и Helm."
-      : "Reusable deployment baseline for Argo CD and Helm delivery.",
-    tags: ["GitHub Actions", "Argo CD", "Helm", "Kubernetes"],
-  },
-  {
-    icon: "▥",
-    title: "Observability Stack",
-    text: isRu
-      ? "Стек мониторинга на Prometheus, Grafana и Loki для полной видимости системы."
-      : "Prometheus, Grafana, and Loki setup for useful production visibility.",
-    tags: ["Prometheus", "Grafana", "Loki", "Alertmanager"],
-  },
-];
 
 const contactIcon = (label: string) =>
   label === "GitHub"
@@ -178,8 +97,8 @@ const contactIcon = (label: string) =>
       </h1>
       <p class="hero-summary">{content.heroSummary}</p>
       <div class="hero-actions">
-        <a class="primary-action" href="#blog"><span>▯</span>{t.readBlog}</a>
-        <a class="secondary-action" href="#projects"><span>‹›</span>{t.seeProjects}</a>
+        <a class="primary-action" href={blogHref}><span>Blog</span>{t.readBlog}</a>
+        <a class="secondary-action" href={projectsHref}><span>Ops</span>{t.seeProjects}</a>
       </div>
       <div class="hero-contact-line">
         {contacts.slice(0, 3).map((contact) => {
@@ -198,7 +117,7 @@ const contactIcon = (label: string) =>
       <div class="orbit-ring"></div>
       <img src="/avatar.jpg" alt={t.portraitAlt} />
       <div class="float-card status-float">
-        <span class="mini-icon">⌁</span>
+        <span class="mini-icon">OK</span>
         <strong>{t.status}</strong>
         <small>All systems <b>100%</b></small>
       </div>
@@ -233,12 +152,12 @@ const contactIcon = (label: string) =>
   <section class="why-section" aria-labelledby="why-title">
     <h2 id="why-title">{t.why}</h2>
     <div class="why-grid">
-      {whyItems.map(([icon, title, text]) => (
+      {whyItems.map((item, index) => (
         <article class="why-item">
-          <span>{icon}</span>
+          <span>{index + 1}</span>
           <div>
-            <h3>{title}</h3>
-            <p>{text}</p>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
           </div>
         </article>
       ))}
@@ -248,35 +167,26 @@ const contactIcon = (label: string) =>
   <section id="blog" class="content-section" aria-labelledby="blog-title">
     <div class="section-heading">
       <h2 id="blog-title">{t.fresh}</h2>
-      <a href="#blog">{t.allPosts} →</a>
+      <a href={blogHref}>{t.allPosts} -></a>
     </div>
-    <div class="article-grid">
-      {articles.map((article) => (
-        <article class="article-card">
-          <div class:list={["article-icon", article.icon]}>{article.icon === "k8s" ? "⎈" : article.icon === "tf" ? "◆" : ">_"}</div>
-          <div>
-            <time>{article.date}</time>
-            <h3>{article.title}</h3>
-            <p>{article.text}</p>
-            <div class="tag-list">{article.tags.map((tag) => <span>{tag}</span>)}</div>
-          </div>
-        </article>
-      ))}
-    </div>
+    <article class="empty-panel">
+      <h3>{t.noPosts}</h3>
+      <p>{t.noPostsText}</p>
+    </article>
   </section>
 
   <section id="projects" class="content-section" aria-labelledby="projects-title">
     <div class="section-heading">
       <h2 id="projects-title">{t.projects}</h2>
-      <a href="#projects">{t.allProjects} →</a>
+      <a href={projectsHref}>{t.allProjects} -></a>
     </div>
     <div class="project-grid">
-      {projects.map((project) => (
+      {content.projects.map((project, index) => (
         <article class="project-card">
-          <span class="project-icon">{project.icon}</span>
+          <span class="project-icon">{index + 1}</span>
           <div>
             <h3>{project.title}</h3>
-            <p>{project.text}</p>
+            <p>{project.description}</p>
             <div class="tag-list">{project.tags.map((tag) => <span>{tag}</span>)}</div>
           </div>
         </article>
@@ -286,7 +196,7 @@ const contactIcon = (label: string) =>
 
   <section class="bottom-grid" aria-label={`${t.about} and ${t.contact}`}>
     <article class="about-panel">
-      <span class="about-icon">♙</span>
+      <span class="about-icon">NB</span>
       <div>
         <h2>{t.about}</h2>
         <p>{content.homeSections[0]?.body}</p>
@@ -294,7 +204,10 @@ const contactIcon = (label: string) =>
     </article>
 
     <article id="contact" class="contact-panel">
-      <h2>{t.contact}</h2>
+      <div class="section-heading">
+        <h2>{t.contact}</h2>
+        <a href={contactsHref}>{t.contact} -></a>
+      </div>
       <div class="contact-links">
         {contacts.map((contact) => {
           const Icon = contactIcon(contact.label);

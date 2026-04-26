@@ -1,0 +1,27 @@
+---
+import Footer from "@/components/Footer.astro";
+import Header from "@/components/Header.astro";
+import ProjectsPage from "@/components/ProjectsPage.astro";
+import { SITE } from "@/config";
+import { profileContent } from "@/data/profile";
+import Layout from "@/layouts/Layout.astro";
+
+const content = profileContent.en;
+const siteUrl = SITE.website.endsWith("/") ? SITE.website.slice(0, -1) : SITE.website;
+---
+
+<Layout
+  title={`${content.projectsPage.title} | ${content.siteTitle}`}
+  description={content.projectsPage.description}
+  lang="en"
+  canonicalURL={`${siteUrl}/projects`}
+  alternateLinks={[
+    { href: `${siteUrl}/projects`, hreflang: "en" },
+    { href: `${siteUrl}/ru/projects`, hreflang: "ru" },
+    { href: `${siteUrl}/projects`, hreflang: "x-default" },
+  ]}
+>
+  <Header />
+  <ProjectsPage content={content} />
+  <Footer />
+</Layout>

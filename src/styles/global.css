@@ -121,57 +121,6 @@ html[data-theme="dark"] {
   top: 0.5rem;
 }
 
-.side-rail {
-  position: fixed;
-  top: 1.1rem;
-  bottom: 1.1rem;
-  left: 1.5rem;
-  z-index: 70;
-  display: flex;
-  width: 3.75rem;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 13px;
-  background: linear-gradient(180deg, #2d3138, #24272d);
-  padding: 0.8rem 0;
-  color: white;
-  box-shadow: 0 18px 40px rgba(31, 35, 41, 0.22);
-}
-
-.rail-logo,
-.rail-link {
-  display: grid;
-  place-items: center;
-  width: 2.45rem;
-  height: 2.45rem;
-  border: 0;
-  border-radius: 9px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.28rem;
-}
-
-.rail-logo {
-  margin-bottom: 1.35rem;
-}
-
-.rail-nav {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.rail-link.is-active,
-.rail-link:hover,
-.rail-theme:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.rail-theme {
-  position: relative;
-  margin-top: auto;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-}
-
 .theme-icon {
   position: absolute;
   width: 1.05rem;
@@ -193,9 +142,8 @@ html[data-theme="dark"] .theme-icon.sun {
 .site-header,
 .home-shell,
 footer {
-  width: min(88rem, calc(100% - 9rem));
-  margin-left: max(7rem, calc((100vw - 88rem) / 2 + 5rem));
-  margin-right: auto;
+  width: min(88rem, calc(100% - 2rem));
+  margin-inline: auto;
 }
 
 .site-header {
@@ -288,6 +236,7 @@ footer {
   font-size: 0.76rem;
 }
 
+.theme-button,
 .menu-button {
   display: none;
   place-items: center;
@@ -296,6 +245,11 @@ footer {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: #fff;
+}
+
+.theme-button {
+  position: relative;
+  display: grid;
 }
 
 .mobile-nav {
@@ -779,6 +733,110 @@ footer {
   font-weight: 700;
 }
 
+.page-shell {
+  min-height: calc(100svh - 8.5rem);
+  padding-top: 0;
+}
+
+.page-hero {
+  border-bottom: 1px solid var(--border);
+  padding: 2.2rem 0 1.8rem;
+}
+
+.page-hero h1 {
+  margin: 1.1rem 0 0.7rem;
+  color: #15181d;
+  font-size: clamp(2.5rem, 5vw, 4.6rem);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.page-hero p:last-child {
+  max-width: 43rem;
+  margin: 0;
+  color: #81858e;
+  font-size: 1.12rem;
+  line-height: 1.55;
+}
+
+.page-card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.page-project-card,
+.page-article-card {
+  min-height: 11rem;
+  padding: 1.15rem;
+}
+
+.page-project-card h2,
+.page-article-card h2,
+.empty-panel h2,
+.empty-panel h3 {
+  margin: 0 0 0.45rem;
+  color: #2a2e35;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.page-project-card p,
+.page-article-card p,
+.empty-panel p {
+  margin: 0;
+  color: #8a8f99;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+.text-link {
+  display: inline-flex;
+  margin-top: 0.8rem;
+  color: #505662;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.empty-panel {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  padding: 1.25rem;
+}
+
+.contact-page-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.contact-page-card {
+  display: grid;
+  grid-template-columns: 2.2rem 1fr;
+  gap: 0.2rem 0.8rem;
+  align-items: center;
+  min-height: 6rem;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  padding: 1rem;
+}
+
+.contact-page-card .contact-icon {
+  grid-row: span 2;
+}
+
+.contact-page-card span {
+  color: #8a8f99;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.contact-page-card strong {
+  overflow-wrap: anywhere;
+  color: #2a2e35;
+  font-size: 1rem;
+}
+
 footer {
   color: #8b909a;
 }
@@ -817,7 +875,9 @@ pre code {
   .hero-stats,
   .why-grid,
   .article-grid,
-  .project-grid {
+  .project-grid,
+  .page-card-grid,
+  .contact-page-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -827,10 +887,6 @@ pre code {
 }
 
 @media (max-width: 820px) {
-  .side-rail {
-    display: none;
-  }
-
   .site-header,
   .home-shell,
   footer {
@@ -881,10 +937,12 @@ pre code {
   }
 
   .why-grid,
-  .article-grid,
-  .project-grid,
-  .bottom-grid,
-  .hero-stats {
+    .article-grid,
+    .project-grid,
+    .page-card-grid,
+    .contact-page-grid,
+    .bottom-grid,
+    .hero-stats {
     grid-template-columns: 1fr;
   }
 }

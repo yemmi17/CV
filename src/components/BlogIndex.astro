@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { ProfileContent } from "@/data/profile";
+
+export interface Props {
+  content: ProfileContent;
+  posts: CollectionEntry<"blog">[];
+}
+
+const { content, posts } = Astro.props;
+const dateLocale = content.locale === "ru" ? "ru-RU" : "en-US";
+const formatDate = (date: Date) =>
+  new Intl.DateTimeFormat(dateLocale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+---
+
+<main id="main-content" class="home-shell page-shell">
+  <section class="page-hero" aria-labelledby="blog-title">
+    <p class="status-pill"><span></span>{content.locale === "ru" ? "Collection" : "Collection"}</p>
+    <h1 id="blog-title">{content.blogPage.title}</h1>
+    <p>{content.blogPage.intro}</p>
+  </section>
+
+  <section class="content-section" aria-label={content.blogPage.title}>
+    {
+      posts.length > 0 ? (
+        <div class="article-grid page-card-grid">
+          {posts.map((post) => (
+            <article class="article-card page-article-card">
+              <div class="article-icon">MD</div>
+              <div>
+                <time datetime={post.data.pubDatetime.toISOString()}>
+                  {content.blogPage.publishedLabel}: {formatDate(post.data.pubDatetime)}
+                </time>
+                <h2>{post.data.title}</h2>
+                <p>{post.data.description}</p>
+                <div class="tag-list">
+                  {post.data.tags.map((tag) => (
+                    <span>{tag}</span>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <article class="empty-panel">
+          <h2>{content.blogPage.emptyTitle}</h2>
+          <p>{content.blogPage.emptyDescription}</p>
+        </article>
+      )
+    }
+  </section>
+</main>
