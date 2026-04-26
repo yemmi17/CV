@@ -5,11 +5,11 @@ const englishPath = isRussian ? pathname.replace(/^\/ru/, "") || "/" : pathname 
 const russianPath = isRussian ? pathname : `/ru${pathname === "/" ? "" : pathname}`;
 ---
 
-<div class="flex items-center gap-2 text-sm font-medium">
+<div class="language-switcher">
   <a
     href={englishPath}
     class:list={[
-      "rounded-full border px-3 py-1 transition-colors",
+      "nav-control transition-colors",
       isRussian
         ? "border-border text-muted-foreground hover:border-accent hover:text-accent"
         : "border-accent bg-accent/10 text-accent",
@@ -21,7 +21,7 @@ const russianPath = isRussian ? pathname : `/ru${pathname === "/" ? "" : pathnam
   <a
     href={russianPath}
     class:list={[
-      "rounded-full border px-3 py-1 transition-colors",
+      "nav-control transition-colors",
       isRussian
         ? "border-accent bg-accent/10 text-accent"
         : "border-border text-muted-foreground hover:border-accent hover:text-accent",

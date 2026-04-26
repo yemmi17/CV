@@ -222,7 +222,7 @@ The project provides Markdown responses for some pages:
 
 `vercel.json` also contains rewrites that route requests with `Accept: text/markdown` to Markdown endpoints, for example `/` to `/index.md` and `/about` to `/about.md`.
 
-There are also redirects for `.md` requests on the `steipete.me` host to `steipete.md`. These rules appear inherited from the original source project and should be reviewed before production use on a different domain.
+Legacy redirects inherited from the source project were removed. Markdown rewrites still route requests with `Accept: text/markdown` to the generated Markdown endpoints.
 
 ## Deployment
 
@@ -235,7 +235,7 @@ Vercel deployment is configured by `vercel.json`:
 - framework: `astro`
 - `trailingSlash`: `false`
 
-The same file defines redirects, rewrites, and security headers. Many redirect rules still point at `steipete.me`, `steipete.md`, or old blog paths. Treat these as legacy until the intended production domains are confirmed.
+The same file defines rewrites and security headers. Redirects are currently empty until the intended production domains and migration paths are confirmed.
 
 ## CI
 
@@ -280,7 +280,7 @@ These items need confirmation before making behavior-changing updates:
 
 - `SITE.website` is currently `https://example.com/`. Confirm the real production URL before final SEO, canonical, sitemap, robots, and structured-data work.
 - Russian profile content and several Russian UI labels appear corrupted in source as mojibake. Confirm the intended Russian copy and file encoding before fixing it.
-- `vercel.json` still contains many `steipete.me`, `steipete.md`, old blog, and external-domain rules. Confirm whether this repository should keep those legacy redirects or replace them with Nikita Borisov's actual domains.
+- `vercel.json` no longer contains source-project domain redirects. Confirm the real production domain before adding canonical redirect rules.
 - `README.md` says RSS and search pages were removed, but `npm run build` still runs Pagefind indexing. Confirm whether search should be fully removed, reintroduced, or kept for future blog content.
 - Blog infrastructure exists while `SITE.postPerIndex` and `SITE.postPerPage` are set to `0`. Confirm whether the blog is planned; if yes, pagination/list routes need a dedicated pass.
 - There are two metadata/head systems: `Layout.astro` and the older `BaseHead.astro` path. Confirm whether older layouts should be removed after all routes are migrated.

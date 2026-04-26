@@ -78,7 +78,13 @@ const isActive = (href: string) =>
       <LanguageSwitcher />
       {
         SITE.lightAndDarkMode && (
-          <button id="theme-btn" class="theme-button" title={labels.theme} aria-label="auto" aria-live="polite">
+          <button
+            id="theme-btn"
+            class="theme-button nav-control"
+            title={labels.theme}
+            aria-label="auto"
+            aria-live="polite"
+          >
             <IconMoon class="theme-icon moon" />
             <IconSunHigh class="theme-icon sun" />
           </button>
@@ -86,7 +92,7 @@ const isActive = (href: string) =>
       }
       <button
         id="menu-btn"
-        class="menu-button"
+        class="menu-button nav-control"
         aria-label={labels.open}
         aria-expanded="false"
         aria-controls="mobile-menu"
