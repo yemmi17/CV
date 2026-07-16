@@ -1,7 +1,5 @@
-// TODO: replace every placeholder below with your real contact URL/email.
 export const socials = {
-  email: "nick@example.com",
-  github: "https://github.com/your-username",
-  linkedin: "https://www.linkedin.com/in/your-profile",
-  telegram: "https://t.me/your-username",
+  email: "nikitabrworkjob@gmail.com",
+  github: "https://github.com/yemmi17",
+  telegram: "https://t.me/Yemmi0",
 } as const;

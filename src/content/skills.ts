@@ -1,8 +1,7 @@
 export const skillGroups = {
-  Infrastructure: ["Linux", "HAProxy", "PostgreSQL"],
-  "Containers & Orchestration": ["Kubernetes", "Docker"],
-  Observability: ["Prometheus", "Grafana", "VictoriaMetrics", "ELK", "OpenSearch"],
-  "CI/CD & Automation": ["Ansible", "AWX", "Jenkins", "GitLab CI", "Git"],
-  "Networking & Security": ["Vault", "Keycloak", "VPN"],
-  "Programming & AI": ["Bash", "Python", "AI Agents", "Context Engineering"],
+  Infrastructure: ["Linux", "Kubernetes", "Docker", "Nginx", "HAProxy", "Load Balancing"],
+  Monitoring: ["Prometheus", "VictoriaMetrics", "Grafana", "Blackbox Exporter", "Node Exporter"],
+  "CI/CD & Automation": ["Jenkins", "GitLab CI", "Ansible", "AWX", "Bash", "Python"],
+  "Databases & Messaging": ["PostgreSQL", "Kafka", "Redis"],
+  Tools: ["Git", "Helm", "ELK", "Vault", "Keycloak"],
 } as const;

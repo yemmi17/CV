@@ -22,6 +22,7 @@ npx.cmd vinext build
 
 - Name, location, availability and PDF path: `src/content/profile.ts`
 - Email and social URLs: `src/content/socials.ts`
+- Education, activities and languages: `src/content/background.ts`
 - Employer, dates and outcomes: `src/content/experience.ts`
 - Projects: `src/content/projects.ts`
 - Skills: `src/content/skills.ts`
